@@ -1,0 +1,19 @@
+CREATE DATABASE IF NOT EXISTS banque_db;
+USE DATABASE banque_db;
+CREATE SCHEMA IF NOT EXISTS securite;
+USE SCHEMA securite;
+
+CREATE OR REPLACE TABLE transactions (
+    id_transaction INT,
+    id_carte INT,
+    date_heure_transaction TIMESTAMP,
+    montant INT,
+    commercant VARCHAR(50)
+);
+INSERT INTO transactions VALUES 
+(1, 111, '2026-10-17 10:00:00', 45, 'Monoprix'),
+(2, 111, '2026-10-17 14:30:00', 12, 'Boulangerie'),
+(3, 999, '2026-10-17 18:00:00', 80, 'Fnac'),        
+(4, 999, '2026-10-17 18:02:00', 150, 'Apple Store'),  
+(5, 999, '2026-10-17 18:05:00', 450, 'Darty'),        
+(6, 222, '2026-10-17 19:15:00', 35, 'Total');
