@@ -1,0 +1,34 @@
+USE DATABASE banque_db;
+USE SCHEMA securite;
+WITH calcul_ecart AS (
+    SELECT
+        id_transaction,
+        id_carte,
+        date_heure_transaction,
+        montant,
+        commercant,
+        LAG(date_heure_transaction) OVER (
+            PARTITION BY id_carte
+            ORDER BY
+                date_heure_transaction
+        ) AS date_transaction_precedente
+    FROM
+        transactions
+)
+SELECT
+    id_transaction,
+    id_carte,
+    date_heure_transaction,
+    date_transaction_precedente,
+    montant,
+    commercant,
+    DATEDIFF(
+        minute,
+        date_transaction_precedente,
+        date_heure_transaction
+    ) AS ecart_minutes
+FROM
+    calcul_ecart
+WHERE
+    ecart_minutes BETWEEN 0
+    AND 10;
